@@ -9,7 +9,6 @@ mcp = FastMCP("mcp-server")
 
 
 
-<<<<<<< HEAD
 @mcp.tool()
 async def validate_libvirt_xml(xml_string: str) -> dict:
     """
@@ -35,14 +34,7 @@ async def validate_libvirt_xml(xml_string: str) -> dict:
         }
     finally:
         os.remove(tmp_path)
-=======
-#@mcp.tool()
-#async def example():
-#    """Simple example tool to demonstrate MCP server functionality."""
-#    url = f"{API_BASE_URL}/example"
-#    response = await make_request(url)
-#    return response
->>>>>>> a44c9069a8ddea94b40907e1b0e66ad346e28dce
+
 
 @mcp.tool()
 async def validate_libvirt_xml(xml_string: str) -> dict:

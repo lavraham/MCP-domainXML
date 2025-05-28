@@ -1,21 +1,11 @@
 FROM fedora:latest
-
 WORKDIR /app
-
+RUN useradd -m appuser
 # Install the libvirt-client package
 USER root
-RUN sudo dnf update -y && \
-    dnf install -y libvirt-client virt-install python3 python3-pip
-
-
-COPY requirements.txt ./
-
-RUN pip install --user fastmcp
-RUN pip install --user --no-cache-dir -r requirements.txt
-
-
+RUN dnf install -y libvirt-client virt-install python3 python3-pip
+USER appuser
 COPY requirements.txt ./
 RUN pip install --user --no-cache-dir -r requirements.txt
-USER 1000
-
-ENTRYPOINT ["python3", "/app/mcp_server.py"]
+COPY mcp_server.py ./
+CMD ["python", "mcp_server.py"]

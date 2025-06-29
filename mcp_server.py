@@ -7,12 +7,7 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("mcp-server")
 
 
-@mcp.tool()
-async def validate_libvirt_xml(xml_string: str) -> dict:
-    """
-    Validates a libvirt XML string using virt-xml-validate.
-    Returns the result of the validation.
-    """
+def _validate_libvirt_xml(xml_string: str) -> dict:
     with tempfile.NamedTemporaryFile("w+", suffix=".xml", delete=False) as tmp:
         tmp.write(xml_string)
         tmp.flush()
@@ -31,6 +26,14 @@ async def validate_libvirt_xml(xml_string: str) -> dict:
         }
     finally:
         os.remove(tmp_path)
+
+@mcp.tool()
+async def validate_libvirt_xml(xml_string: str) -> dict:
+    """
+    Validates a libvirt XML string using virt-xml-validate.
+    Returns the result of the validation.
+    """
+    return _validate_libvirt_xml(xml_string)
 
 
 if __name__ == "__main__":
